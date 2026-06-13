@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{stock_name}} AI投委会分析报告 {{date}}</title>
+<style>
+:root{--bg:#0f172a;--card:#1e293b;--card2:#334155;--accent:#38bdf8;--accent2:#818cf8;--green:#4ade80;--red:#f87171;--yellow:#fbbf24;--text:#e2e8f0;--muted:#94a3b8;--border:#475569}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.6}
+nav{position:sticky;top:0;z-index:100;background:rgba(15,23,42,0.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:0.75rem 2rem;display:flex;gap:1.5rem;align-items:center;overflow-x:auto}
+nav a{color:var(--muted);text-decoration:none;font-size:0.85rem;white-space:nowrap;transition:color 0.2s}
+nav a:hover{color:var(--accent)}
+nav .logo{color:var(--accent);font-weight:700;font-size:1rem;margin-right:1rem}
+.container{max-width:1200px;margin:0 auto;padding:2rem}
+h1{font-size:1.8rem;margin-bottom:0.5rem}
+h2{font-size:1.4rem;color:var(--accent);margin:2rem 0 1rem;padding-bottom:0.5rem;border-bottom:2px solid var(--border)}
+h3{font-size:1.1rem;color:var(--accent2);margin:1.5rem 0 0.75rem}
+.meta{color:var(--muted);font-size:0.85rem;margin-bottom:2rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1rem 0}
+.metric-card{background:var(--card);border-radius:8px;padding:1rem;border:1px solid var(--border)}
+.metric-card .label{font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em}
+.metric-card .value{font-size:1.5rem;font-weight:700;margin:0.25rem 0}
+.metric-card .sub{font-size:0.8rem;color:var(--muted)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+@media(max-width:768px){.two-col{grid-template-columns:1fr}}
+.card{background:var(--card);border-radius:8px;padding:1.25rem;margin:1rem 0;border:1px solid var(--border)}
+.card h3{margin-top:0}
+table{width:100%;border-collapse:collapse;margin:0.75rem 0}
+th{text-align:left;padding:0.5rem;background:var(--card2);color:var(--accent);font-size:0.8rem;border-bottom:2px solid var(--border)}
+td{padding:0.5rem;border-bottom:1px solid var(--border);font-size:0.85rem}
+.badge{display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.75rem;font-weight:600}
+.badge-green{background:rgba(74,222,128,0.15);color:var(--green)}
+.badge-red{background:rgba(248,113,113,0.15);color:var(--red)}
+.badge-yellow{background:rgba(251,191,36,0.15);color:var(--yellow)}
+.badge-blue{background:rgba(56,189,248,0.15);color:var(--accent)}
+.progress-bar{height:8px;background:var(--card2);border-radius:4px;overflow:hidden;margin:0.25rem 0}
+.progress-bar .fill{height:100%;border-radius:4px;transition:width 0.3s}
+.score-circle{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:700;border:3px solid}
+.verdict-box{text-align:center;padding:1.5rem;background:var(--card);border-radius:8px;margin:1rem 0}
+.verdict-box .verdict{font-size:1.8rem;font-weight:700;margin:0.5rem 0}
+ul{padding-left:1.25rem;margin:0.5rem 0}
+li{margin:0.35rem 0}
+.source{font-size:0.7rem;color:var(--muted);font-style:italic}
+.disclaimer{margin-top:3rem;padding:1rem;background:var(--card2);border-radius:8px;font-size:0.8rem;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+<nav>
+<span class="logo">AI投委会</span>
+<a href="#overview">概览</a>
+<a href="#researcher">研究员</a>
+<a href="#fundamental">基本面</a>
+<a href="#technical">技术面</a>
+<a href="#sentiment">舆情</a>
+<a href="#risk">风险</a>
+<a href="#committee">合议</a>
+<a href="#summary">总结</a>
+</nav>
+
+<div class="container">
+
+<!-- Section 0: 概览 -->
+<section id="overview">
+<h1>{{stock_name}} ({{stock_code}}) AI投委会分析报告</h1>
+<p class="meta">报告日期: {{date}} | 数据来源: {{sources_used}} | 分析引擎: 5角色并行</p>
+
+<div class="grid">
+<div class="metric-card"><div class="label">当前股价</div><div class="value">{{price_current}}</div><div class="sub">{{ma_system}}</div></div>
+<div class="metric-card"><div class="label">市值</div><div class="value">{{market_cap}}</div><div class="sub">PE(TTM): {{pe_ttm}}</div></div>
+<div class="metric-card"><div class="label">营收(最新)</div><div class="value">{{revenue_latest}}</div><div class="sub">同比: {{revenue_yoy}}</div></div>
+<div class="metric-card"><div class="label">净利润(最新)</div><div class="value">{{net_profit_latest}}</div><div class="sub">同比: {{net_profit_yoy}}</div></div>
+</div>
+
+<div class="verdict-box">
+<div style="font-size:0.85rem;color:var(--muted)">投委会结论</div>
+<div class="verdict" style="color:{{verdict_color}}">{{verdict}}</div>
+<div style="font-size:1.1rem">{{one_liner}}</div>
+<div style="margin-top:0.5rem">综合评分: <strong>{{weighted_score}}</strong>/10</div>
+</div>
+</section>
+
+<!-- Section 1: 研究员 -->
+<section id="researcher">
+<h2>1. 研究员报告</h2>
+<div class="card">
+<h3>公司概况</h3>
+<p>{{researcher.company_profile}}</p>
+</div>
+<div class="card">
+<h3>近期重大事件</h3>
+<ul>{{researcher.key_events}}</ul>
+</div>
+<div class="card">
+<h3>行业动态</h3>
+<ul>{{researcher.industry_dynamics}}</ul>
+</div>
+<div class="card">
+<h3>最新发展</h3>
+<ul>{{researcher.recent_developments}}</ul>
+</div>
+<p class="source">数据来源: {{researcher.data_sources}}</p>
+</section>
+
+<!-- Section 2: 基本面 -->
+<section id="fundamental">
+<h2>2. 基本面分析</h2>
+<div class="two-col">
+<div class="card">
+<h3>营收结构</h3>
+{{fundamental.revenue_structure}}
+</div>
+<div class="card">
+<h3>盈利能力趋势</h3>
+{{fundamental.profitability_trend}}
+</div>
+</div>
+<div class="card">
+<h3>现金流评估</h3>
+<p>{{fundamental.cash_flow_assessment}}</p>
+</div>
+<div class="card">
+<h3>估值评估</h3>
+<p>{{fundamental.valuation_assessment}}</p>
+</div>
+<div class="card">
+<h3>竞争护城河</h3>
+<ul>{{fundamental.competitive_moat}}</ul>
+</div>
+<div class="card">
+<h3>成长驱动力</h3>
+<ul>{{fundamental.growth_drivers}}</ul>
+</div>
+<div class="grid">
+<div class="metric-card"><div class="label">质地评分</div><div class="value">{{scores.quality}}/10</div></div>
+<div class="metric-card"><div class="label">成长评分</div><div class="value">{{scores.growth}}/10</div></div>
+<div class="metric-card"><div class="label">估值评分</div><div class="value">{{scores.valuation}}/10</div><div class="sub">10=最便宜</div></div>
+</div>
+</section>
+
+<!-- Section 3: 技术面 -->
+<section id="technical">
+<h2>3. 技术面分析</h2>
+<div class="grid">
+<div class="metric-card"><div class="label">短期趋势</div><div class="value">{{trend_short.score}}/10</div><div class="sub">{{trend_short.label}}</div></div>
+<div class="metric-card"><div class="label">中期趋势</div><div class="value">{{trend_mid.score}}/10</div><div class="sub">{{trend_mid.label}}</div></div>
+<div class="metric-card"><div class="label">长期趋势</div><div class="value">{{trend_long.score}}/10</div><div class="sub">{{trend_long.label}}</div></div>
+<div class="metric-card"><div class="label">技术综合</div><div class="value">{{technical.overall_score}}/10</div></div>
+</div>
+<div class="two-col">
+<div class="card"><h3>支撑位</h3><ul>{{key_support}}</ul></div>
+<div class="card"><h3>阻力位</h3><ul>{{key_resistance}}</ul></div>
+</div>
+<div class="card"><h3>技术指标汇总</h3>{{indicators_summary}}</div>
+</section>
+
+<!-- Section 4: 舆情 -->
+<section id="sentiment">
+<h2>4. 舆情分析</h2>
+<div class="grid">
+<div class="metric-card"><div class="label">正面</div><div class="value" style="color:var(--green)">{{news_ratio.positive}}%</div></div>
+<div class="metric-card"><div class="label">中性</div><div class="value">{{news_ratio.neutral}}%</div></div>
+<div class="metric-card"><div class="label">负面</div><div class="value" style="color:var(--red)">{{news_ratio.negative}}%</div></div>
+<div class="metric-card"><div class="label">市场热度</div><div class="value">{{sentiment.heat_level}}</div></div>
+</div>
+<div class="card"><h3>散户情绪</h3><p>{{retail_mood}}</p></div>
+<div class="card"><h3>争议话题</h3><ul>{{controversies}}</ul></div>
+<div class="card"><h3>潜在误读</h3><ul>{{potential_misreads}}</ul></div>
+</section>
+
+<!-- Section 5: 风险 -->
+<section id="risk">
+<h2>5. 风险矩阵</h2>
+<table>
+<tr><th>类别</th><th>评级</th><th>概率</th><th>影响</th><th>详情</th></tr>
+{{risk_matrix_rows}}
+</table>
+<div class="two-col">
+<div class="card"><h3>高危风险</h3><ul>{{top_risks}}</ul></div>
+<div class="card"><h3>低风险项</h3><ul>{{low_risks}}</ul></div>
+</div>
+<div class="card"><h3>监控日历</h3><ul>{{monitoring_calendar}}</ul></div>
+</section>
+
+<!-- Section 6: 合议 -->
+<section id="committee">
+<h2>6. 投委会合议</h2>
+<div class="card">
+<h3>评分明细</h3>
+<table>
+<tr><th>维度</th><th>权重</th><th>得分</th><th>加权</th></tr>
+{{score_breakdown_rows}}
+</table>
+</div>
+<div class="card">
+<h3>矛盾识别</h3>
+<ul>{{contradictions_detected}}</ul>
+</div>
+<div class="two-col">
+<div class="card"><h3 style="color:var(--green)">看多理由</h3><ul>{{bull_case}}</ul></div>
+<div class="card"><h3 style="color:var(--red)">看空理由</h3><ul>{{bear_case}}</ul></div>
+</div>
+<div class="card">
+<h3>各角色投票</h3>
+<table>
+<tr><th>角色</th><th>意见</th></tr>
+{{committee_votes_rows}}
+</table>
+</div>
+<div class="card"><h3>关键时间节点</h3><ul>{{key_dates}}</ul></div>
+</section>
+
+<!-- Section 7: 总结 -->
+<section id="summary">
+<h2>7. 投资经理总结</h2>
+<div class="verdict-box">
+<div style="font-size:0.85rem;color:var(--muted)">最终结论</div>
+<div class="verdict" style="color:{{verdict_color}}">{{verdict}}</div>
+<div>{{one_liner}}</div>
+<div style="margin-top:0.5rem;color:var(--muted)">核心矛盾: {{core_contradiction}}</div>
+</div>
+</section>
+
+<div class="disclaimer">
+本报告由AI投资委员会系统自动生成，仅供参考，不构成投资建议。投资有风险，入市需谨慎。<br>
+数据来源: {{sources_used}} | 生成时间: {{generated_at}}
+</div>
+
+</div>
+</body>
+</html>

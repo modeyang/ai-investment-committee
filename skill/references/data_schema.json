@@ -1,0 +1,182 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AI投委会 data_bundle.json",
+  "description": "Phase 1 输出：数据采集层",
+  "type": "object",
+  "required": [
+    "meta",
+    "financial",
+    "valuation",
+    "technical",
+    "events"
+  ],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": [
+        "stock_code",
+        "stock_name",
+        "collected_at",
+        "sources_used"
+      ],
+      "properties": {
+        "stock_code": {
+          "type": "string"
+        },
+        "stock_name": {
+          "type": "string"
+        },
+        "collected_at": {
+          "type": "string"
+        },
+        "sources_used": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "financial": {
+      "type": "object",
+      "properties": {
+        "revenue": {
+          "type": "array"
+        },
+        "net_profit": {
+          "type": "array"
+        },
+        "gross_margin": {
+          "type": "array"
+        },
+        "cash_flow": {
+          "type": "object"
+        },
+        "balance_sheet": {
+          "type": "object"
+        }
+      }
+    },
+    "valuation": {
+      "type": "object",
+      "properties": {
+        "pe_ttm": {
+          "type": "object"
+        },
+        "pb": {
+          "type": "object"
+        },
+        "market_cap": {
+          "type": "object"
+        },
+        "pe_comparable": {
+          "type": "array"
+        }
+      }
+    },
+    "technical": {
+      "type": "object",
+      "properties": {
+        "price_current": {
+          "type": "number"
+        },
+        "ma_system": {
+          "type": "object"
+        },
+        "macd": {
+          "type": "object"
+        },
+        "rsi": {
+          "type": "object"
+        },
+        "volume": {
+          "type": "object"
+        },
+        "support_levels": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "resistance_levels": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "news_sentiment": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "sentiment": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "risk_events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "found": {
+            "type": "boolean"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "shareholders": {
+      "type": "array"
+    },
+    "research_reports": {
+      "type": "array"
+    },
+    "industry_data": {
+      "type": "array"
+    },
+    "kb_context": {
+      "type": "object"
+    }
+  }
+}

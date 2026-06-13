@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AI投委会 committee.json",
+  "description": "Phase 3 输出：投委会合议结论",
+  "type": "object",
+  "required": [
+    "weighted_score",
+    "one_liner",
+    "verdict",
+    "committee_votes"
+  ],
+  "properties": {
+    "weighted_score": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 10
+    },
+    "score_breakdown": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "one_liner": {
+      "type": "string"
+    },
+    "core_contradiction": {
+      "type": "string"
+    },
+    "contradictions_detected": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "bull_case": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "bear_case": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "key_dates": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "强烈看多",
+        "谨慎看多",
+        "中性",
+        "谨慎看空",
+        "强烈看空"
+      ]
+    },
+    "committee_votes": {
+      "type": "object",
+      "properties": {
+        "researcher": {
+          "type": "string"
+        },
+        "fundamental": {
+          "type": "string"
+        },
+        "technical": {
+          "type": "string"
+        },
+        "sentiment": {
+          "type": "string"
+        },
+        "risk": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

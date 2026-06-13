@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AI投委会 context.json",
+  "description": "Phase 0 输出：预检与上下文",
+  "type": "object",
+  "required": [
+    "stock_code",
+    "stock_name",
+    "exchange",
+    "tools_available"
+  ],
+  "properties": {
+    "stock_code": {
+      "type": "string",
+      "description": "股票代码"
+    },
+    "stock_name": {
+      "type": "string",
+      "description": "公司名称"
+    },
+    "exchange": {
+      "type": "string",
+      "enum": [
+        "SSE",
+        "SZSE",
+        "BSE"
+      ]
+    },
+    "existing_company_card": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "historical_signals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "related_themes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "analysis_history": {
+      "type": "integer"
+    },
+    "tools_available": {
+      "type": "object",
+      "required": [
+        "opencli",
+        "search_strategy"
+      ],
+      "properties": {
+        "opencli": {
+          "type": "boolean"
+        },
+        "opencli_cookie_adapters": {
+          "type": "boolean"
+        },
+        "iwencai_api": {
+          "type": "boolean"
+        },
+        "mx_api": {
+          "type": "boolean"
+        },
+        "search_strategy": {
+          "type": "string",
+          "enum": [
+            "opencli_first",
+            "websearch_only"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,213 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AI投委会 analyses.json",
+  "description": "Phase 2 输出：5角色分析引擎",
+  "type": "object",
+  "required": [
+    "researcher",
+    "fundamental",
+    "technical",
+    "sentiment",
+    "risk"
+  ],
+  "properties": {
+    "researcher": {
+      "type": "object",
+      "required": [
+        "company_profile",
+        "data_sources"
+      ],
+      "properties": {
+        "company_profile": {
+          "type": "string"
+        },
+        "key_events": {
+          "type": "array"
+        },
+        "industry_dynamics": {
+          "type": "array"
+        },
+        "recent_developments": {
+          "type": "array"
+        },
+        "data_sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "fundamental": {
+      "type": "object",
+      "required": [
+        "scores"
+      ],
+      "properties": {
+        "revenue_structure": {
+          "type": "object"
+        },
+        "profitability_trend": {
+          "type": "object"
+        },
+        "cash_flow_assessment": {
+          "type": "string"
+        },
+        "valuation_assessment": {
+          "type": "string"
+        },
+        "competitive_moat": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "growth_drivers": {
+          "type": "array"
+        },
+        "scores": {
+          "type": "object",
+          "required": [
+            "quality",
+            "growth",
+            "valuation"
+          ],
+          "properties": {
+            "quality": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            },
+            "growth": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            },
+            "valuation": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            }
+          }
+        }
+      }
+    },
+    "technical": {
+      "type": "object",
+      "required": [
+        "overall_score"
+      ],
+      "properties": {
+        "trend_short": {
+          "type": "object"
+        },
+        "trend_mid": {
+          "type": "object"
+        },
+        "trend_long": {
+          "type": "object"
+        },
+        "key_support": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "key_resistance": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "indicators_summary": {
+          "type": "object"
+        },
+        "overall_score": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 10
+        }
+      }
+    },
+    "sentiment": {
+      "type": "object",
+      "required": [
+        "heat_level",
+        "overall_score"
+      ],
+      "properties": {
+        "news_ratio": {
+          "type": "object"
+        },
+        "retail_mood": {
+          "type": "string"
+        },
+        "controversies": {
+          "type": "array"
+        },
+        "potential_misreads": {
+          "type": "array"
+        },
+        "heat_level": {
+          "type": "string",
+          "enum": [
+            "低",
+            "中",
+            "高"
+          ]
+        },
+        "overall_score": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        }
+      }
+    },
+    "risk": {
+      "type": "object",
+      "required": [
+        "risk_matrix",
+        "overall_score"
+      ],
+      "properties": {
+        "risk_matrix": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "type": "string"
+              },
+              "rating": {
+                "type": "string"
+              },
+              "probability": {
+                "type": "string"
+              },
+              "impact": {
+                "type": "string"
+              },
+              "detail": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "top_risks": {
+          "type": "array"
+        },
+        "low_risks": {
+          "type": "array"
+        },
+        "monitoring_calendar": {
+          "type": "array"
+        },
+        "overall_score": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        }
+      }
+    }
+  }
+}
